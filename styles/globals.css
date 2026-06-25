@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+body {
+  background: #1a1a2e;
+  color: #e0e0e0;
+  font-family: -apple-system, 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', sans-serif;
+  /* iOS Safari スクロール最適化 */
+  -webkit-overflow-scrolling: touch;
+  overflow-x: hidden;
+}
+
+/* iOS Safari でのinput zoom防止 */
+input, button, select, textarea {
+  font-size: 16px;
+}
+
+/* iOS Safarのsafe area対応 */
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.cell-green { background: #4a7c59; border-color: #5a9c6e; }
+.cell-yellow { background: #b5a428; border-color: #d4c12e; }
+.cell-gray { background: #4a4a5a; border-color: #5a5a6e; }
+
+.hint-arrow-up { color: #ff6b6b; }
+.hint-arrow-down { color: #6bb5ff; }
+
+input:focus { outline: 2px solid #7c5cbf; }
+
+.scrollbar-thin::-webkit-scrollbar { width: 4px; }
+.scrollbar-thin::-webkit-scrollbar-track { background: #2a2a3e; }
+.scrollbar-thin::-webkit-scrollbar-thumb { background: #5a5a7e; border-radius: 2px; }
