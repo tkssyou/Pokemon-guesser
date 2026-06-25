@@ -1,9 +1,16 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import { io } from 'socket.io-client';
-import PokemonSearch from '../../components/PokemonSearch';
-import GuessRow from '../../components/GuessRow';
+import dynamic from 'next/dynamic';
+
+// Socket.io と window は SSR で使えないのでクライアントのみで import
+let io;
+if (typeof window !== 'undefined') {
+  io = require('socket.io-client').io;
+}
+
+const PokemonSearch = dynamic(() => import('../../components/PokemonSearch'), { ssr: false });
+const GuessRow = dynamic(() => import('../../components/GuessRow'), { ssr: false });
 
 const HINT_ATTRS = [
   { attr: 'eggGroups',     label: 'タマゴグループ' },
@@ -167,7 +174,7 @@ export default function RoomPage() {
   const me = players.find(p => p.id === myId);
   const opponent = players.find(p => p.id !== myId);
   const guessedIds = new Set(allGuesses.filter(g => g.playerId === myId).map(g => g.pokemon.id));
-  const hintsLeft = MAX_HINTS - revealedHints.length;
+  const hintsLeft = HINT_ATTRS.length - revealedHints.length;
   const opponentWantsRematch = opponent && rematchWanted.includes(opponent.id);
 
   // ── Render helpers ─────────────────────────────────────────────
